@@ -40,3 +40,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 1. Create a Next.js app with `npx create-next-app@latest`
 1. Install `shadcn-ui` support with `npx shadcn-ui@latest init`
 1. Install the required `shadcn-ui` components with `npx shadcn-ui@latest add button card command dialog form input label popover textarea toast`
+1. Add `shadcn-ui` components with `npx shadcn-ui@latest add button card command dialog form input label popover textarea toast`
