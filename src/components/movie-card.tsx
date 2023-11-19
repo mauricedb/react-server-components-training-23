@@ -1,5 +1,3 @@
-'use client'
-
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -14,8 +12,21 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { useShoppingCart } from '@/components/shopping-cart'
 import { Resolve } from '@/lib/type-helpers'
+import dynamic from 'next/dynamic'
+
+// import AddToShoppingCart from './add-to-shoping-card-button'
+const AddToShoppingCart = dynamic(
+  () => import('./add-to-shoping-card-button'),
+  {
+    ssr: false,
+    loading: () => (
+      <Button variant="secondary" disabled>
+        Add to cart
+      </Button>
+    ),
+  },
+)
 
 type Props = {
   movie: Resolve<
@@ -34,8 +45,6 @@ type Props = {
 }
 
 export const MovieCard = ({ movie }: Props) => {
-  const { addMovie } = useShoppingCart()
-
   return (
     <Card className="flex flex-col">
       <CardHeader>
@@ -60,12 +69,7 @@ export const MovieCard = ({ movie }: Props) => {
         <Button asChild variant="outline">
           <Link href={`/movies/${movie.id}`}>Edit</Link>
         </Button>
-        <Button
-          variant="secondary"
-          onClick={() => addMovie({ id: movie.id, title: movie.title })}
-        >
-          Add to cart
-        </Button>
+        <AddToShoppingCart movie={movie} />
       </CardFooter>
     </Card>
   )
