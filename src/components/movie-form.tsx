@@ -27,6 +27,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { movieFormSchema } from '@/lib/movie-form-schema'
+import { useRouter } from 'next/navigation'
 
 async function saveMovie(movie: Movie) {
   const rsp = await fetch(`/api/movies/${movie.id}`, {
@@ -48,10 +49,12 @@ type Props = {
 
 export function MovieForm({ initialMovie }: Props) {
   const { toast } = useToast()
+  const router = useRouter()
 
   const onSubmit = async (movie: Movie) => {
     try {
       await saveMovie(movie)
+      router.refresh()
 
       toast({
         title: 'Success',

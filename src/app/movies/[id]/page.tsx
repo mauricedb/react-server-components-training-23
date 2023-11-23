@@ -4,6 +4,8 @@ import { Movie } from '@prisma/client'
 
 import { MovieForm } from '@/components/movie-form'
 
+export const dynamic = 'force-dynamic'
+
 type Props = {
   params: {
     id: string

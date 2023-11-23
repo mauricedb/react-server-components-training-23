@@ -2,6 +2,8 @@ import { Movie } from '@prisma/client'
 
 import { MovieList } from '@/components/movie-list'
 
+export const dynamic = 'force-dynamic'
+
 export default async function MoviesPage() {
   const rsp = await fetch('http://localhost:3000/api/movies')
   const movies: Movie[] = await rsp.json()

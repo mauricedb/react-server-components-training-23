@@ -2,6 +2,8 @@ import { Movie } from '@prisma/client'
 
 import { MovieList } from '@/components/movie-list'
 
+export const dynamic = 'force-dynamic'
+
 type Props = {
   params: {
     genre: string
