@@ -1,8 +1,7 @@
 import React from 'react'
 
-import { Movie } from '@prisma/client'
-
 import { MovieForm } from '@/components/movie-form'
+import { prisma } from '@/lib/db'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,17 +11,16 @@ type Props = {
   }
 }
 
-async function MoviePage({ params: { id } }: Props) {
-  const rsp = await fetch(`http://localhost:3000/api/movies/${id}`)
-  const movie: Movie = await rsp.json()
+async function getMovie(id: string) {
+  const movie = await prisma.movie.findFirstOrThrow({
+    where: { id: +id },
+  })
 
-  if (!movie) {
-    return (
-      <main className="flex flex-grow items-center justify-center">
-        Loading movie ...
-      </main>
-    )
-  }
+  return movie
+}
+
+async function MoviePage({ params: { id } }: Props) {
+  const movie = await getMovie(id)
 
   return (
     <main className="container">

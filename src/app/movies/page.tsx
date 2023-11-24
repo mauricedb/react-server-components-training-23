@@ -1,12 +1,24 @@
-import { Movie } from '@prisma/client'
+import { Prisma } from '@prisma/client'
 
 import { MovieList } from '@/components/movie-list'
+import { prisma } from '@/lib/db'
 
 export const dynamic = 'force-dynamic'
 
+async function getMovies() {
+  const orderBy: Prisma.MovieOrderByWithRelationInput = {
+    voteAverage: 'desc',
+  } as const
+
+  const movies = await prisma.movie.findMany({
+    orderBy,
+  })
+
+  return movies
+}
+
 export default async function MoviesPage() {
-  const rsp = await fetch('http://localhost:3000/api/movies')
-  const movies: Movie[] = await rsp.json()
+  const movies = await getMovies()
 
   return (
     <main className="container space-y-4">

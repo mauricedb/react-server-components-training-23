@@ -1,6 +1,7 @@
-import { Movie } from '@prisma/client'
+import { Prisma } from '@prisma/client'
 
 import { MovieList } from '@/components/movie-list'
+import { prisma } from '@/lib/db'
 
 export const dynamic = 'force-dynamic'
 
@@ -10,9 +11,25 @@ type Props = {
   }
 }
 
+async function getMovies(genreId: string) {
+  const orderBy: Prisma.MovieOrderByWithRelationInput = {
+    voteAverage: 'desc',
+  } as const
+
+  const genre = await prisma.genre.findFirst({
+    where: { id: +genreId },
+    include: {
+      movies: {
+        orderBy,
+      },
+    },
+  })
+
+  return genre?.movies ?? []
+}
+
 export default async function MoviesByGenrePage({ params: { genre } }: Props) {
-  const rsp = await fetch(`http://localhost:3000/api/movies?genre=${genre}`)
-  const movies: Movie[] = await rsp.json()
+  const movies = await getMovies(genre)
 
   return (
     <main className="container space-y-4">
