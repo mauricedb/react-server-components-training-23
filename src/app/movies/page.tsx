@@ -4,10 +4,13 @@ import { MovieList } from '@/components/movie-list'
 import { prisma } from '@/lib/db'
 import { MovieCard } from '@/components/movie-card'
 import { ComponentProps } from 'react'
+import { sleep } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
 
 async function getMovies() {
+  // await sleep(5_000)
+
   const orderBy: Prisma.MovieOrderByWithRelationInput = {
     voteAverage: 'desc',
   } as const
