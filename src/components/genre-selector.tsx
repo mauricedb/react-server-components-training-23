@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react'
+'use client'
+
+import { useState } from 'react'
 import { Check, ChevronsUpDown } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 
@@ -13,8 +15,11 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 
-export function GenreSelector() {
-  const [genres, setGenres] = useState<Genre[]>([])
+type Props = {
+  genres: Genre[]
+}
+
+export function GenreSelector({ genres }: Props) {
   const [open, setOpen] = useState(false)
   const { genre: selectedGenre } = useParams()
 
@@ -23,16 +28,6 @@ export function GenreSelector() {
     value: genre.id.toString(),
     label: genre.name,
   }))
-
-  useEffect(() => {
-    async function fetchGenres() {
-      const rsp = await fetch('/api/genres')
-      const genres = await rsp.json()
-      setGenres(genres)
-    }
-
-    fetchGenres()
-  }, [])
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

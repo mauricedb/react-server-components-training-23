@@ -2,11 +2,16 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { RotateCw } from 'lucide-react'
+import { ReactNode, Suspense } from 'react'
 
 import { MainNavLink } from '@/components/main-nav-link'
-import { GenreSelector } from '@/components/genre-selector'
 
-export function MainNav() {
+type Props = {
+  genres: ReactNode
+}
+
+export function MainNav({ genres }: Props) {
   const pathname = usePathname()
 
   return (
@@ -20,7 +25,13 @@ export function MainNav() {
         <MainNavLink href="/movies" active={pathname === '/movies'}>
           Movies
         </MainNavLink>
-        <GenreSelector />
+        <Suspense
+          fallback={
+            <RotateCw className="w-[200px] animate-spin text-foreground/40" />
+          }
+        >
+          {genres}
+        </Suspense>
         <MainNavLink href="/genres" active={pathname === '/genres'}>
           Genres
         </MainNavLink>
