@@ -1,7 +1,5 @@
 'use client'
 
-import { FormEventHandler } from 'react'
-
 import { Genre } from '@prisma/client'
 
 import { Input } from '@/components/ui/input'
@@ -15,30 +13,15 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { useRouter } from 'next/navigation'
 
 type Props = {
   genre: Genre
+  onSubmit: (formData: FormData) => Promise<unknown>
 }
 
-export function GenreForm({ genre }: Props) {
-  const router = useRouter()
-
-  const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-
-    const id = formData.get('id')
-    await fetch(`/api/genres/${id}`, {
-      method: 'PUT',
-      body: formData,
-    })
-
-    router.push('/genres')
-  }
-
+export function GenreForm({ genre, onSubmit }: Props) {
   return (
-    <form onSubmit={onSubmit} className="mx-auto w-1/2">
+    <form action={onSubmit} className="mx-auto w-1/2">
       <Card>
         <CardHeader>
           <CardTitle>Edit Movie Genre</CardTitle>
