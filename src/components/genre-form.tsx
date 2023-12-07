@@ -13,6 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { SubmitButton } from './submit-button'
 
 type Props = {
   genre: Genre
@@ -45,7 +46,7 @@ export function GenreForm({ genre, onSubmit }: Props) {
           <Button type="reset" variant="outline">
             Cancel
           </Button>
-          <Button type="submit">Save Changes</Button>
+          <SubmitButton>Save Changes</SubmitButton>
         </CardFooter>
       </Card>
     </form>

@@ -6,6 +6,7 @@ import { saveGenre } from '@/server/save-genre'
 import { Genre } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import { sleep } from '@/lib/utils'
 
 type Props = {
   params: {
@@ -22,6 +23,8 @@ async function GenrePage({ params: { id } }: Props) {
     'use server'
     console.log('onSubmit', formData)
 
+    await sleep(5000)
+
     const genre: Genre = {
       id: +(formData.get('id') as string),
       name: formData.get('name') as string,
@@ -31,7 +34,7 @@ async function GenrePage({ params: { id } }: Props) {
 
     revalidatePath('/genres')
 
-    return redirect('/genres')
+    redirect('/genres')
   }
 
   return (
