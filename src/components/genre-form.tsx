@@ -22,9 +22,10 @@ import { SubmitButton } from './submit-button'
 type Props = {
   genre: Genre
   onSubmit: (state: string, formData: FormData) => Promise<string>
+  onDeleteGenre: (formData: FormData) => Promise<void>
 }
 
-export function GenreForm({ genre, onSubmit }: Props) {
+export function GenreForm({ genre, onSubmit, onDeleteGenre }: Props) {
   const [errorMessage, action] = useFormState(onSubmit, '')
 
   return (
@@ -61,6 +62,9 @@ export function GenreForm({ genre, onSubmit }: Props) {
           <Button type="reset" variant="outline">
             Cancel
           </Button>
+          <SubmitButton formAction={onDeleteGenre} variant="destructive">
+            Delete
+          </SubmitButton>
           <SubmitButton>Save Changes</SubmitButton>
         </CardFooter>
       </Card>

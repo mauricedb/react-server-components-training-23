@@ -41,9 +41,19 @@ async function GenrePage({ params: { id } }: Props) {
     redirect('/genres')
   }
 
+  const onDeleteGenre = async (formData: FormData) => {
+    'use server'
+    console.log('onDeleteGenre', formData)
+
+    redirect('/genres')
+  }
   return (
     <main className="container">
-      <GenreForm genre={genre} onSubmit={onSubmit} />
+      <GenreForm
+        genre={genre}
+        onSubmit={onSubmit}
+        onDeleteGenre={onDeleteGenre}
+      />
     </main>
   )
 }
