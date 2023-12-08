@@ -19,11 +19,15 @@ async function GenrePage({ params: { id } }: Props) {
     where: { id: +id },
   })
 
-  const onSubmit = async (formData: FormData) => {
+  const onSubmit = async (state: string, formData: FormData) => {
     'use server'
     console.log('onSubmit', formData)
 
     await sleep(5000)
+
+    if (!formData.get('name')) {
+      return 'The genre name is required.'
+    }
 
     const genre: Genre = {
       id: +(formData.get('id') as string),

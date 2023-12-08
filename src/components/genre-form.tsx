@@ -1,6 +1,10 @@
 'use client'
 
+import { useFormState } from 'react-dom'
+
 import { Genre } from '@prisma/client'
+
+import { cn } from '@/lib/utils'
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -17,12 +21,14 @@ import { SubmitButton } from './submit-button'
 
 type Props = {
   genre: Genre
-  onSubmit: (formData: FormData) => Promise<unknown>
+  onSubmit: (state: string, formData: FormData) => Promise<string>
 }
 
 export function GenreForm({ genre, onSubmit }: Props) {
+  const [errorMessage, action] = useFormState(onSubmit, '')
+
   return (
-    <form action={onSubmit} className="mx-auto w-1/2">
+    <form action={action} className="mx-auto w-1/2">
       <Card>
         <CardHeader>
           <CardTitle>Edit Movie Genre</CardTitle>
@@ -38,7 +44,16 @@ export function GenreForm({ genre, onSubmit }: Props) {
                 name="name"
                 placeholder="Name of the movie genre"
                 defaultValue={genre.name}
+                className={cn({
+                  'ring-2 ring-red-500 focus-visible:ring-red-500':
+                    !!errorMessage,
+                })}
               />
+              {!!errorMessage ? (
+                <div className="ml-1 text-xs font-medium text-red-500">
+                  {errorMessage}
+                </div>
+              ) : null}
             </div>
           </div>
         </CardContent>
