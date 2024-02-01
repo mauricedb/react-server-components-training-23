@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 import { ComponentProps } from 'react'
 
 import { MovieList } from '@/components/movie-list'
@@ -25,16 +25,16 @@ const movies: Movies = [
 ]
 
 describe('MovieList', () => {
-  it('has a card with title for each movie', () => {
-    render(<MovieList movies={movies} />)
+  it('has a card with title for each movie', async () => {
+    await act(() => render(<MovieList movies={movies} />))
 
     for (const movie of movies) {
       expect(screen.getByRole('heading', { name: movie.title })).toBeVisible()
     }
   })
 
-  it('renders a list of movies with an Add to cart for each movie', () => {
-    render(<MovieList movies={movies} />)
+  it('renders a list of movies with an Add to cart for each movie', async () => {
+    await act(() => render(<MovieList movies={movies} />))
 
     const cartButtons = screen.getAllByRole('button', { name: 'Add to cart' })
     expect(cartButtons).toHaveLength(movies.length)

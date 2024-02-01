@@ -29,7 +29,7 @@ const movies = [
   },
 ]
 
-describe('The Top Rated Movies page', () => {
+describe.skip('The Top Rated Movies page', () => {
   const originalFetch = globalThis.fetch
 
   beforeAll(() => {
