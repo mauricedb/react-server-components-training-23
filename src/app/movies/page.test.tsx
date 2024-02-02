@@ -29,21 +29,20 @@ const movies = [
   },
 ]
 
-describe.skip('The Top Rated Movies page', () => {
-  const originalFetch = globalThis.fetch
+jest.mock('../../lib/db', () => ({
+  prisma: {
+    movie: {
+      findMany: jest.fn(() => movies),
+    },
+  },
+}))
 
-  beforeAll(() => {
-    globalThis.fetch = jest
-      .fn()
-      .mockResolvedValue({ json: jest.fn().mockResolvedValue(movies) })
-  })
-
-  afterAll(() => {
-    globalThis.fetch = originalFetch
-  })
-
+describe('The Top Rated Movies page', () => {
   it('Displays the page title', async () => {
-    await act(() => render(<MoviesPage />))
+    await act(async () => {
+      const element = await MoviesPage()
+      return render(element)
+    })
 
     expect(
       screen.getByRole('heading', { name: 'Top Rated Movies' }),
@@ -51,7 +50,10 @@ describe.skip('The Top Rated Movies page', () => {
   })
 
   it('fetches and displays movies on mount', async () => {
-    await act(() => render(<MoviesPage />))
+    await act(async () => {
+      const element = await MoviesPage()
+      return render(element)
+    })
 
     for (const movie of movies) {
       expect(screen.getByRole('heading', { name: movie.title })).toBeVisible()
