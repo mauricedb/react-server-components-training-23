@@ -1,5 +1,6 @@
 'use client'
 
+import { Counter } from '@/components/counter'
 import { PropsWithChildren } from 'react'
 
 export function ParentComponent({ children }: PropsWithChildren) {
@@ -14,6 +15,8 @@ export function ParentComponent({ children }: PropsWithChildren) {
       >
         {label}
       </h2>
+      <Counter />
+
       {children}
     </main>
   )

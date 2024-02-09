@@ -1,3 +1,4 @@
+import { Counter } from '@/components/client-counter'
 import { ChildComponent } from './child-component'
 import { ParentComponent } from './parent-component'
 
@@ -11,6 +12,7 @@ export default function ServerOrClientPage() {
       <ParentComponent>
         <ChildComponent />
       </ParentComponent>
+      <Counter />
     </main>
   )
 }
